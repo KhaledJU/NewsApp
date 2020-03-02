@@ -32,30 +32,31 @@ class ArticlesFragment : Fragment() {
 
         articlesFragmentViewModel = ViewModelProvider(this)[ArticlesFragmentViewModel::class.java]
         articlesFragmentViewModel.getArticles().observe(this, Observer {
-            articleAdapter.notifyDataSetChanged()
+            articleAdapter.changeArtecles(articlesFragmentViewModel.getArticles().value as ArrayList<Article>)
         })
 
         initArticlesRecycle(rootView)
 
 
         rootView.swiper.setOnRefreshListener {
+            articlesFragmentViewModel.getArticles().observe(this, Observer {
+                articleAdapter.changeArtecles(articlesFragmentViewModel.getArticles().value as ArrayList<Article>)
+                rootView.swiper.isRefreshing = false
+            })
         }
 
         return rootView
     }
 
     private fun initArticlesRecycle(rootView: View) {
-        articleAdapter = ArticleAdapter(articlesFragmentViewModel.getArticles().value as ArrayList<Article>, rootView.context)
-
+        articleAdapter = ArticleAdapter(arrayListOf(), rootView.context)
         rootView.newsRecycle.layoutManager = LinearLayoutManager(rootView.context)
         rootView.newsRecycle.setHasFixedSize(true)
         rootView.newsRecycle.adapter = articleAdapter
 
     }
 
-    private fun updateUI(rootView: View) {
-        //rootView.swiper.isRefreshing = false
-    }
+
 
 
 }

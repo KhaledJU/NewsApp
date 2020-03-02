@@ -27,5 +27,9 @@ class ArticleAdapter(var articles: ArrayList<Article>, val context: Context) :
         holder.bind(articles.get(position), context)
     }
 
+    fun changeArtecles(articles: ArrayList<Article>) {
+        this.articles = articles
+        notifyDataSetChanged()
+    }
 }
 

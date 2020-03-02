@@ -1,6 +1,6 @@
-package com.example.newsapp.newsAPI
+package com.example.newsapp.networking
 
-import com.example.newsapp.Models.ArticlesResponse
+import com.example.newsapp.models.ArticlesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

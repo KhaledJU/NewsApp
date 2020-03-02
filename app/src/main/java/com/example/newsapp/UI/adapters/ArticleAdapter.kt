@@ -1,12 +1,12 @@
-package com.example.newsapp.UI.Adapters
+package com.example.newsapp.UI.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
-import com.example.newsapp.UI.ViewHolders.ArticleViewHolder
-import com.example.newsapp.Models.Article
+import com.example.newsapp.UI.viewHolders.ArticleViewHolder
+import com.example.newsapp.models.Article
 
 class ArticleAdapter(var articles: ArrayList<Article>, val context: Context) :
     RecyclerView.Adapter<ArticleViewHolder>() {
@@ -29,6 +29,10 @@ class ArticleAdapter(var articles: ArrayList<Article>, val context: Context) :
 
     fun changeArtecles(articles: ArrayList<Article>) {
         this.articles = articles
+
+//        this.articles.clear()
+//        this.articles.addAll(articles)
+
         notifyDataSetChanged()
     }
 }

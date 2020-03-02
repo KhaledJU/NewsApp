@@ -1,4 +1,4 @@
-package com.example.newsapp.newsAPI
+package com.example.newsapp.networking
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,4 +1,4 @@
-package com.example.newsapp.UI.Fragments
+package com.example.newsapp.UI.fragments
 
 
 import android.os.Bundle
@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.newsapp.R
-import com.example.newsapp.UI.Adapters.ArticleAdapter
-import com.example.newsapp.Models.Article
-import com.example.newsapp.UI.ViewModels.ArticlesFragmentViewModel
+import com.example.newsapp.UI.adapters.ArticleAdapter
+import com.example.newsapp.models.Article
+import com.example.newsapp.UI.viewModels.ArticlesFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_articles.view.*
 
 
@@ -30,19 +30,18 @@ class ArticlesFragment : Fragment() {
 
         val rootView = inflater.inflate(R.layout.fragment_articles, container, false)
 
-        articlesFragmentViewModel = ViewModelProvider(this)[ArticlesFragmentViewModel::class.java]
-        articlesFragmentViewModel.getArticles().observe(this, Observer {
-            articleAdapter.changeArtecles(articlesFragmentViewModel.getArticles().value as ArrayList<Article>)
-        })
-
         initArticlesRecycle(rootView)
 
+        articlesFragmentViewModel = ViewModelProvider(this)[ArticlesFragmentViewModel::class.java]
+        articlesFragmentViewModel.getArticles().observe(this, Observer {
+            articleAdapter.changeArtecles(it as ArrayList<Article>)
+        })
+
+        articlesFragmentViewModel.fetchArticles()
 
         rootView.swiper.setOnRefreshListener {
-            articlesFragmentViewModel.getArticles().observe(this, Observer {
-                articleAdapter.changeArtecles(articlesFragmentViewModel.getArticles().value as ArrayList<Article>)
-                rootView.swiper.isRefreshing = false
-            })
+            articlesFragmentViewModel.fetchArticles()
+            rootView.swiper.isRefreshing = false
         }
 
         return rootView
@@ -55,8 +54,4 @@ class ArticlesFragment : Fragment() {
         rootView.newsRecycle.adapter = articleAdapter
 
     }
-
-
-
-
 }

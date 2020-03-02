@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.UI.ViewHolders.ArticleViewHolder
-import com.example.newsapp.newsAPI.Article
+import com.example.newsapp.Models.Article
 
 class ArticleAdapter(var articles: ArrayList<Article>, val context: Context) :
     RecyclerView.Adapter<ArticleViewHolder>() {
@@ -27,9 +27,5 @@ class ArticleAdapter(var articles: ArrayList<Article>, val context: Context) :
         holder.bind(articles.get(position), context)
     }
 
-    fun changeArtecles(articles: ArrayList<Article>) {
-        this.articles = articles
-        notifyDataSetChanged()
-    }
 }
 

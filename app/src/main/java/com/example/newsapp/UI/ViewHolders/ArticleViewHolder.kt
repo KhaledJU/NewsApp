@@ -11,7 +11,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
-import com.example.newsapp.newsAPI.Article
+import com.example.newsapp.Models.Article
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.single_article.view.*
 

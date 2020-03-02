@@ -27,6 +27,10 @@ dependencies {
 
     implementation "androidx.cardview:cardview:1.0.0"
 
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 

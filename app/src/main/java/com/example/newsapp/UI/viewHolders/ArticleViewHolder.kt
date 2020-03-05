@@ -32,6 +32,7 @@ class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             .placeholder(R.drawable.ic_launcher_foreground)
             .error(R.drawable.ic_launcher_background)
             .fit()
+            .centerCrop()
             .into(img);
 
         card.setOnClickListener {

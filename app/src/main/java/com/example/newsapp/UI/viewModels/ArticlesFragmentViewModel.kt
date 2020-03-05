@@ -1,42 +1,39 @@
 package com.example.newsapp.UI.viewModels
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newsapp.models.Article
-import com.example.newsapp.models.ArticlesResponse
 import com.example.newsapp.repositories.ArticlesRepo
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class ArticlesFragmentViewModel: ViewModel() {
     private var articles: MutableLiveData<List<Article>> = MutableLiveData()
     private var articlesRepo: ArticlesRepo = ArticlesRepo
-
+    private var articleDisposable: Disposable? = null
     fun getArticles (): MutableLiveData<List<Article>>  {
         return articles
     }
 
     fun fetchArticles(){
-        val articlesResponseCall = articlesRepo.getArticlesResponseCall()
-        articlesResponseCall.enqueue(object : Callback<ArticlesResponse> {
-            override fun onFailure(call: Call<ArticlesResponse>, throwable: Throwable) {
-                throwable.message.let {
-                    Log.d("RESPONCEFAIL", it);
-                }
-            }
+        val articlesResponseObservable =
+            articlesRepo.getArticlesResponseObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
 
-            override fun onResponse(
-                call: Call<ArticlesResponse>,
-                response: Response<ArticlesResponse>
-            ) {
-                if (response.isSuccessful) {
-                    articles.value = response.body()?.articles
-                } else {
-                    //erro
-                }
-            }
+        articleDisposable = articlesResponseObservable.subscribe({ articlesResponse ->
+            articles.value = articlesResponse.articles
+        }, {
+           Log.d(TAG, it.message)
         })
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        articleDisposable?.dispose()
     }
 }
